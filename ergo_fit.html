@@ -6,23 +6,23 @@
 <title>Find Your ERGO Fit</title>
 <style>
   body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin:0; padding:0; display:flex; justify-content:center; align-items:center; min-height:100vh; }
-  .container { background:#fff; padding:20px; border-radius:12px; max-width:600px; width:90%; box-shadow:0 0 15px rgba(0,0,0,0.1);}
+  .container { background:#fff; padding:20px; border-radius:12px; max-width:650px; width:95%; box-shadow:0 0 15px rgba(0,0,0,0.1); display:flex; flex-direction:column; position:relative; }
   h1 { text-align:center; color:#191210; }
   .question { margin-bottom:20px; }
   .options button { display:block; width:100%; margin:5px 0; padding:10px; border:none; border-radius:6px; cursor:pointer; font-size:16px; text-align:left; }
   .options button:hover { opacity:0.9; }
   .next-btn { background:#BF1528; color:#fff; }
-  .result { text-align:center; font-size:20px; margin-top:20px; }
+  .result { text-align:left; font-size:18px; margin-top:20px; }
   .score-box { padding:10px; margin:5px 0; border-radius:6px; color:#fff; }
-  .finance { background:#BF1528; }
   .data { background:#BF1528; }
-  .consulting { background:#BF1528; } 
+  .finance { background:#BF1528; }
+  .strategy { background:#BF1528; }
   .marketing { background:#BF1528; }
   .hr { background:#BF1528; }
-
-  /* Progress bar styles */
+  .claims { background:#BF1528; }
   .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 15px; height: 20px; }
   .progress-bar { height: 100%; width: 0%; background-color: #BF1528; border-radius: 10px; transition: width 0.3s; }
+  .bottom-right { margin-top: 20px; text-align: right; font-weight: bold; color: #191210; font-size: 20px; }
 </style>
 </head>
 <body>
@@ -34,6 +34,7 @@
   </div>
   <div id="quiz"></div>
   <div id="result" class="result"></div>
+  <div class="bottom-right">ERGO.Grow together.</div>
 </div>
 
 <script>
@@ -41,157 +42,147 @@ const questions = [
   {
     q: "Έχεις μια ιδέα για τη βελτίωση μιας διαδικασίας στην εταιρεία. Πώς θα ξεκινούσες;",
     options: [
-      {text: "Θα αναλύσω τα δεδομένα για να καταλάβω τι δεν δουλεύει", value:"Data"},
-      {text: "Θα εξετάσω πώς επηρεάζει το οικονομικό αποτέλεσμα", value:"Finance"},
-      {text: "Θα προτείνω τρόπους για να βελτιωθεί η συνολική στρατηγική", value:"Consulting"},
-      {text: "Θα ενημερώσω και κινητοποιήσω τους ανθρώπους να συμμετάσχουν", value:"HR"},
-      {text: "Θα σχεδιάσω πώς να επικοινωνηθεί το νέο πλάνο σε πελάτες", value:"Marketing"}
+      {text:"Θα αναλύσω τα δεδομένα για να καταλάβω τι δεν δουλεύει", value:"Data & Technology"},
+      {text:"Θα εξετάσω πώς επηρεάζει το οικονομικό αποτέλεσμα", value:"Finance & Risk"},
+      {text:"Θα προτείνω τρόπους για να βελτιωθεί η συνολική στρατηγική", value:"Project Management & Strategy"},
+      {text:"Θα ενημερώσω και κινητοποιήσω τους ανθρώπους να συμμετάσχουν", value:"HR"},
+      {text:"Θα σχεδιάσω πώς να επικοινωνηθεί το νέο πλάνο σε πελάτες", value:"Marketing & Digital"},
+      {text:"Θα εξετάσω τους πιθανούς κινδύνους και θα αξιολογήσω ποιοι τρόποι βελτίωσης είναι ασφαλείς για την εταιρεία", value:"Claims & Underwriting"}
     ]
   },
   {
     q: "Αν έπρεπε να επηρεάσεις τους ανθρώπους να δεχτούν μια αλλαγή, τι θα επέλεγες;",
     options: [
-      {text:"Να φτιάξω ένα data-driven report που δείχνει τα οφέλη", value:"Data"},
-      {text:"Να εξηγήσω με οικονομικούς όρους γιατί είναι απαραίτητη", value:"Finance"},
-      {text:"Να παρουσιάσω ένα ολοκληρωμένο στρατηγικό σχέδιο", value:"Consulting"},
+      {text:"Να φτιάξω ένα data-driven report που δείχνει τα οφέλη", value:"Data & Technology"},
+      {text:"Να εξηγήσω με οικονομικούς όρους γιατί είναι απαραίτητη", value:"Finance & Risk"},
+      {text:"Να παρουσιάσω ένα ολοκληρωμένο στρατηγικό σχέδιο", value:"Project Management & Strategy"},
       {text:"Να οργανώσω ένα workshop για να καταλάβουν οι συνάδελφοι", value:"HR"},
-      {text:"Να δημιουργήσω μια επικοινωνιακή καμπάνια", value:"Marketing"}
+      {text:"Να δημιουργήσω μια επικοινωνιακή καμπάνια, αξιοποιώντας όλα τα κανάλια", value:"Marketing & Digital"},
+      {text:"Να αξιολογήσω τους πιθανούς κινδύνους και να προτείνω ασφαλείς λύσεις", value:"Claims & Underwriting"}
     ]
   },
   {
     q: "Αν είχες να διαχειριστείς μια κρίση στην εταιρεία, ποιο θα ήταν το πρώτο σου βήμα;",
     options: [
-      {text:"Να ελέγξω τους αριθμούς και να υπολογίσω τα πιθανά ρίσκα", value:"Finance"},
-      {text:"Να φτιάξω ένα εργαλείο που παρακολουθεί την εξέλιξη των δεδομένων", value:"Data"},
-      {text:"Να προτείνω αλλαγές στις διαδικασίες", value:"Consulting"},
-      {text:"Να επικοινωνήσω με τους ενδιαφερόμενους για να διατηρηθεί η εμπιστοσύνη", value:"Marketing"},
-      {text:"Να εκπαιδεύσω την ομάδα ώστε να ξέρει πώς να αντιμετωπίσει την κατάσταση", value:"HR"}
+      {text:"Να αξιολογήσω τον οικονομικό αντίκτυπο και να δω πού χρειάζεται άμεση παρέμβαση.", value:"Finance & Risk"},
+      {text:"Να αναλύσω γρήγορα τα δεδομένα για να καταλάβω τι προκάλεσε την κρίση", value:"Data & Technology"},
+      {text:"Να οργανώσω ένα σχέδιο δράσης για να περιορίσουμε τις επιπτώσεις", value:"Project Management & Strategy"},
+      {text:"Να σχεδιάσω την επικοινωνία προς το κοινό και τους πελάτες", value:"Marketing & Digital"},
+      {text:"Να επικοινωνήσω με τους ανθρώπους της εταιρείας για να τους ενημερώσω", value:"HR"},
+      {text:"Να εξετάσω τους πιθανούς κινδύνους και τις απαιτήσεις που προκύπτουν", value:"Claims & Underwriting"}
     ]
   },
   {
     q: "Σου ανατίθεται ένα έργο που απαιτεί συνεργασία πολλών τμημάτων. Τι ρόλο θα ήθελες να παίξεις;",
     options: [
-      {text:"Να φροντίσω ώστε όλοι να κατανοούν τους στόχους και να συνεργάζονται", value:"HR"},
-      {text:"Να δημιουργήσω dashboards για να παρακολουθούν όλοι την πρόοδο", value:"Data"},
-      {text:"Να υπολογίσω τα κόστη και τις οικονομικές συνέπειες", value:"Finance"},
-      {text:"Να προτείνω στρατηγικές για την καλύτερη εκτέλεση", value:"Consulting"},
-      {text:"Να σχεδιάσω πώς να προσεγγίσουμε πελάτες/χρήστες", value:"Marketing"}
+      {text:"Να φροντίζω για την ομαλή συνεργασία των ανθρώπων, να επιλύω ζητήματα και να υποστηρίζω την ομάδα.", value:"HR"},
+      {text:"Να συγκεντρώσω και να αναλύσω τα δεδομένα ώστε όλοι να έχουν τις απαραίτητες πληροφορίες", value:"Data & Technology"},
+      {text:"Να αξιολογώ τους κινδύνους και το οικονομικό αντίκτυπο κάθε απόφασης", value:"Finance & Risk"},
+      {text:"Να συντονίζω τις ομάδες και να οργανώνω το σχέδιο δράσης", value:"Project Management & Strategy"},
+      {text:"Να δημιουργήσω ψηφιακά εργαλεία και υλικά για να διευκολύνω την ενημέρωση", value:"Marketing & Digital"},
+      {text:"Να αξιολογώ τις αποφάσεις και τις προτάσεις της ομάδας ώστε να διασφαλίζεται η ασφάλεια", value:"Claims & Underwriting"}
     ]
   },
   {
     q: "Αν έπρεπε να αποφασίσεις για ένα νέο προϊόν, ποιο στοιχείο θα σε ενδιέφερε περισσότερο;",
     options: [
-      {text:"Το αν είναι επικερδές και το οικονομικό ρίσκο", value:"Finance"},
-      {text:"Πώς να παρακολουθώ την απόδοσή του με τεχνολογία", value:"Data"},
-      {text:"Πώς να το εντάξω στρατηγικά στην αγορά", value:"Consulting"},
-      {text:"Πώς να το επικοινωνήσω στους πελάτες", value:"Marketing"},
-      {text:"Πώς να εκπαιδεύσω την ομάδα ώστε να το υποστηρίξει σωστά", value:"HR"}
+      {text:"Το αν είναι επικερδές και το οικονομικό ρίσκο", value:"Finance & Risk"},
+      {text:"Πώς να αναλύσω δεδομένα αγοράς και χρήσης για να καταλάβω πού υπάρχει πραγματική ανάγκη", value:"Data & Technology"},
+      {text:"Να συντονίσω όλες τις ομάδες ώστε το προϊόν να ενταχθεί ομαλά στη στρατηγική", value:"Project Management & Strategy"},
+      {text:"Να σχεδιάσω πώς θα προωθηθεί το προϊόν στους πελάτες", value:"Marketing & Digital"},
+      {text:"Πώς να εκπαιδεύσω την ομάδα ώστε να το υποστηρίξει σωστά", value:"HR"},
+      {text:"Να αξιολογήσω πιθανούς κινδύνους και απαιτήσεις για ασφάλεια", value:"Claims & Underwriting"}
     ]
   },
   {
     q: "Τι σε κινητοποιεί περισσότερο όταν ξεκινάς μια εργασία;",
     options: [
-      {text:"Η ανάλυση δεδομένων και η αλήθεια πίσω από τους αριθμούς", value:"Data"},
-      {text:"Η κατανόηση των οικονομικών επιπτώσεων", value:"Finance"},
-      {text:"Η στρατηγική επίλυση προβλημάτων", value:"Consulting"},
-      {text:"Η δυνατότητα να επικοινωνώ και να επηρεάζω άλλους", value:"Marketing"},
-      {text:"Η ανάπτυξη και καθοδήγηση ανθρώπων", value:"HR"}
-    ]
-  },
-  {
-    q: "Σου ανατίθεται να βελτιώσεις μια διαδικασία. Τι προσέγγιση θα διάλεγες;",
-    options: [
-      {text:"Να αναλύσω τα δεδομένα και να βρω μοτίβα", value:"Data"},
-      {text:"Να αξιολογήσω την οικονομική της αποτελεσματικότητα", value:"Finance"},
-      {text:"Να προτείνω αλλαγές με βάση τη στρατηγική", value:"Consulting"},
-      {text:"Να εκπαιδεύσω την ομάδα στην καινούργια διαδικασία", value:"HR"},
-      {text:"Να δημιουργήσω επικοινωνιακά υλικά για σωστή εφαρμογή", value:"Marketing"}
-    ]
-  },
-  {
-    q: "Αν έπρεπε να πάρεις μια σημαντική απόφαση με περιορισμένο χρόνο, τι θα έκανες;",
-    options: [
-      {text:"Να βασιστώ σε δεδομένα και analytics", value:"Data"},
-      {text:"Να υπολογίσω τα οικονομικά και το ρίσκο", value:"Finance"},
-      {text:"Να σκεφτώ τη στρατηγική επιρροή της απόφασης", value:"Consulting"},
-      {text:"Να σιγουρευτώ ότι όλοι οι εμπλεκόμενοι είναι ενήμεροι", value:"HR"},
-      {text:"Να σκεφτώ πώς θα επικοινωνηθεί καλύτερα στους πελάτες", value:"Marketing"}
+      {text:"Η ανάλυση δεδομένων και η αλήθεια πίσω από τους αριθμούς", value:"Data & Technology"},
+      {text:"Η κατανόηση των οικονομικών επιπτώσεων", value:"Finance & Risk"},
+      {text:"Να οργανώσω το έργο και να εξασφαλίσω ότι όλα τα βήματα είναι μελετημένα", value:"Project Management & Strategy"},
+      {text:"Να σχεδιάσω δημιουργικές στρατηγικές και να φέρω καινοτομία", value:"Marketing & Digital"},
+      {text:"Να βοηθήσω τους ανθρώπους να συνεργαστούν καλύτερα και να νιώθουν υποστήριξη", value:"HR"},
+      {text:"Να αξιολογήσω προσεκτικά τα ρίσκα και τις απαιτήσεις", value:"Claims & Underwriting"}
     ]
   },
   {
     q: "Ποιο από τα παρακάτω σενάρια σε ενθουσιάζει περισσότερο;",
     options: [
-      {text:"Να ανακαλύψω μοτίβα και ευκαιρίες μέσα από δεδομένα", value:"Data"},
-      {text:"Να ελέγξω οικονομικές αποφάσεις και ρίσκα", value:"Finance"},
-      {text:"Να σχεδιάσω στρατηγικές για μεγαλύτερη αποτελεσματικότητα", value:"Consulting"},
-      {text:"Να δημιουργήσω καμπάνιες και στρατηγικές επικοινωνίας", value:"Marketing"},
-      {text:"Να αναπτύξω ταλέντα και να εκπαιδεύσω συναδέλφους", value:"HR"}
+      {text:"Να δουλεύω με μεγάλα datasets και να βρίσκω μοτίβα", value:"Data & Technology"},
+      {text:"Να αναλύω οικονομικά σενάρια και να προβλέπω ευκαιρίες ή κινδύνους", value:"Finance & Risk"},
+      {text:"Να οργανώνω και να καθοδηγώ ομάδες για στρατηγικό σχέδιο", value:"Project Management & Strategy"},
+      {text:"Να δημιουργήσω καμπάνιες και στρατηγικές επικοινωνίας", value:"Marketing & Digital"},
+      {text:"Να δημιουργώ προγράμματα που βοηθούν ανθρώπους να συνεργαστούν και να εξελιχθούν", value:"HR"},
+      {text:"Να αξιολογώ προτάσεις και ρίσκα για ασφαλείς πρωτοβουλίες", value:"Claims & Underwriting"}
     ]
   }
 ];
 
-let current = 0;
-let scores = {Finance:0, Data:0, Consulting:0, Marketing:0, HR:0};
+const descriptions = {
+  "Data & Technology": "Σου αρέσει να δουλεύεις με δεδομένα, αναλύσεις και τεχνολογία. Αντλείς ικανοποίηση από μοτίβα, επίλυση προβλημάτων και καινοτομία.<br><br><strong>Ρόλοι:</strong> Data Analyst, Data Engineer, Developer, Pricing Analyst κ.α.",
+  "Finance & Risk": "Ενδιαφέρεσαι για την οικονομική διάσταση και την αξιολόγηση ρίσκου. Σου αρέσει να βλέπεις τον οικονομικό αντίκτυπο αποφάσεων.<br><br><strong>Ρόλοι:</strong> Financial Controlling & Reporting Specialist, Accountant, Risk Management Specialist κ.α.",
+  "Project Management & Strategy": "Σου αρέσει να οργανώνεις, να σχεδιάζεις και να συντονίζεις ομάδες για να πετυχαίνουν στόχους.<br><br><strong>Ρόλοι:</strong> Project Manager, Transformation Office Specialist κ.α.",
+  "Marketing & Digital": "Ενθουσιάζεσαι από επικοινωνία, στρατηγική και καινοτομία σε ψηφιακά μέσα.<br><br><strong>Ρόλοι:</strong> Product Management Analyst, Brand Building Specialist, Digital Specialist κ.α.",
+  "HR": "Σου αρέσει να δουλεύεις με ανθρώπους, να υποστηρίζεις και να ενθαρρύνεις συνεργασία.<br><br><strong>Ρόλοι:</strong> Talent Acquisition Specialist, Learning & Development Specialist.",
+  "Claims & Underwriting": "Σου αρέσει να αξιολογείς ρίσκα και να διασφαλίζεις ασφαλείς αποφάσεις.<br><br><strong>Ρόλοι:</strong> Claims Adjuster, Underwriter κ.α."
+};
 
-function updateProgress(){
-  const progress = document.getElementById('progressBar');
-  progress.style.width = ((current)/questions.length)*100 + '%';
-}
+
+let current = 0;
+let scores = { "Data & Technology":0, "Finance & Risk":0, "Project Management & Strategy":0, "Marketing & Digital":0, "HR":0, "Claims & Underwriting":0 };
+
+function shuffleArray(array){ return array.sort(()=>Math.random()-0.5); }
+
+function updateProgress(){ document.getElementById('progressBar').style.width = ((current)/questions.length)*100 + '%'; }
 
 function showQuestion(){
   updateProgress();
   const quiz = document.getElementById('quiz');
   quiz.innerHTML = '';
   if(current < questions.length){
-    const qDiv = document.createElement('div');
-    qDiv.className = 'question';
+    const qDiv = document.createElement('div'); qDiv.className='question';
     qDiv.innerHTML = `<h3>Ερώτηση ${current+1}: ${questions[current].q}</h3>`;
-    const optsDiv = document.createElement('div');
-    optsDiv.className = 'options';
-    questions[current].options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.innerText = opt.text;
-      btn.className = 'next-btn';
-      btn.onclick = () => { scores[opt.value]++; current++; showQuestion(); };
+    const optsDiv = document.createElement('div'); optsDiv.className='options';
+    shuffleArray([...questions[current].options]).forEach(opt=>{
+      const btn=document.createElement('button'); btn.innerText=opt.text; btn.className='next-btn';
+      btn.onclick=()=>{ scores[opt.value]++; current++; showQuestion(); };
       optsDiv.appendChild(btn);
     });
-    qDiv.appendChild(optsDiv);
-    quiz.appendChild(qDiv);
-  } else {
-    showResult();
-  }
+    qDiv.appendChild(optsDiv); quiz.appendChild(qDiv);
+  } else showResult();
 }
 
 function showResult(){
   updateProgress();
-  const quiz = document.getElementById('quiz');
+  document.getElementById('quiz').innerHTML=''; // Καθαρίζει το quiz
   const resultDiv = document.getElementById('result');
-  quiz.innerHTML = '';
-
+  
   const maxScore = Math.max(...Object.values(scores));
   const winners = Object.keys(scores).filter(k => scores[k] === maxScore);
-
+  
   let html = '';
-  if(winners.length === 1){
-    html = `<p>Συγχαρητήρια! Το τμήμα που ταιριάζει καλύτερα σε σένα είναι <strong>${winners[0]}</strong>! Καλώς ήρθες στην ERGO, όπου το ταλέντο σου θα ανθίσει.</p>`;
-  } else {
-    html = `<p>Έχετε ταλέντο σε περισσότερα από ένα τμήματα! Δείτε παρακάτω τα τμήματα που ταιριάζουν καλύτερα σε σένα:</p>`;
-    winners.forEach(w => {
-      let colorClass = '';
-      if(w==='Finance') colorClass='finance';
-      if(w==='Data') colorClass='data';
-      if(w==='Consulting') colorClass='consulting';
-      if(w==='Marketing') colorClass='marketing';
-      if(w==='HR') colorClass='hr';
-      html += `<div class="score-box ${colorClass}">${w}</div>`;
-    });
-  }
-
+  winners.forEach(w => {
+    let colorClass = '';
+    if(w === 'Data & Technology') colorClass = 'data';
+    if(w === 'Finance & Risk') colorClass = 'finance';
+    if(w === 'Project Management & Strategy') colorClass = 'strategy';
+    if(w === 'Marketing & Digital') colorClass = 'marketing';
+    if(w === 'HR') colorClass = 'hr';
+    if(w === 'Claims & Underwriting') colorClass = 'claims';
+    
+    // Εδώ βάζουμε το w σε bold + κενό + περιγραφή + κενό + Ρόλοι σε bold
+    html += `<div class="score-box ${colorClass}">
+               <strong>${w}</strong><br><br>
+               ${descriptions[w]}
+             </div>`;
+  });
+  
   resultDiv.innerHTML = html;
 }
 
 showQuestion();
 </script>
-
 </body>
 </html>
+
+

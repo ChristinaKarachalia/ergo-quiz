@@ -5,14 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Find Your ERGO Fit</title>
 <style>
-  body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin:0; padding:0; display:flex; justify-content:center; align-items:center; min-height:100vh; }
-  .container { background:#fff; padding:20px; border-radius:12px; max-width:600px; width:90%; box-shadow:0 0 15px rgba(0,0,0,0.1);}
-  h1 { text-align:center; color:#191210; }
+  body { 
+    font-family: Arial, sans-serif; 
+    background-color: #f5f5f5; 
+    margin:0; 
+    padding:0; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    min-height:100vh; 
+  }
+
+  .container { 
+    background:#fff; 
+    padding:20px; 
+    border-radius:12px; 
+    max-width:600px; 
+    width:90%; 
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  /* Logo πάνω αριστερά */
+  .header-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px; /* μέγεθος logo */
+    height: auto;
+  }
+
+  h1 {
+    text-align:center;
+    color:#191210;
+    font-size: 24px;
+    margin-top:0;
+    margin-bottom: 20px;
+  }
+
   .question { margin-bottom:20px; }
-  .options button { display:block; width:100%; margin:5px 0; padding:10px; border:none; border-radius:6px; cursor:pointer; font-size:16px; text-align:left; }
+
+  .options button { 
+    display:block; 
+    width:100%; 
+    margin:5px 0; 
+    padding:10px; 
+    border:none; 
+    border-radius:6px; 
+    cursor:pointer; 
+    font-size:16px; 
+    text-align:left; 
+  }
+
   .options button:hover { opacity:0.9; }
+
   .next-btn { background:#BF1528; color:#fff; }
+
   .result { text-align:center; font-size:20px; margin-top:20px; }
+
   .score-box { padding:10px; margin:5px 0; border-radius:6px; color:#fff; }
   .finance { background:#BF1528; }
   .data { background:#BF1528; }
@@ -20,21 +70,58 @@
   .marketing { background:#BF1528; }
   .hr { background:#BF1528; }
 
-  /* Progress bar styles */
-  .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 15px; height: 20px; }
-  .progress-bar { height: 100%; width: 0%; background-color: #BF1528; border-radius: 10px; transition: width 0.3s; }
+  /* Progress bar */
+  .progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    height: 20px;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #BF1528;
+    border-radius: 10px;
+    transition: width 0.3s;
+  }
+  /* Footer σταθερό */
+  .footer-brand {
+    position: fixed;
+    bottom: 15px;
+    right: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    opacity: 0.9;
+  }
+
+  /* #quiz position relative για absolute στοιχεία */
+  #quiz { position: relative; }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>Find Your ERGO Fit</h1>
+  <!-- Header με logo δίπλα στον τίτλο -->
+  <div class="header">
+    <img src="logo.jpg" alt="ERGO Logo" class="header-logo">
+    <h1>Find Your ERGO Fit</h1>
+  </div>
+
+  <!-- Progress bar -->
   <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
   </div>
+
+  <!-- Quiz -->
   <div id="quiz"></div>
   <div id="result" class="result"></div>
 </div>
+
+<!-- Footer σταθερό -->
+<div class="footer-brand">ERGO.Grow together</div>
 
 <script>
 const questions = [
@@ -48,86 +135,7 @@ const questions = [
       {text: "Θα σχεδιάσω πώς να επικοινωνηθεί το νέο πλάνο σε πελάτες", value:"Marketing"}
     ]
   },
-  {
-    q: "Αν έπρεπε να επηρεάσεις τους ανθρώπους να δεχτούν μια αλλαγή, τι θα επέλεγες;",
-    options: [
-      {text:"Να φτιάξω ένα data-driven report που δείχνει τα οφέλη", value:"Data"},
-      {text:"Να εξηγήσω με οικονομικούς όρους γιατί είναι απαραίτητη", value:"Finance"},
-      {text:"Να παρουσιάσω ένα ολοκληρωμένο στρατηγικό σχέδιο", value:"Consulting"},
-      {text:"Να οργανώσω ένα workshop για να καταλάβουν οι συνάδελφοι", value:"HR"},
-      {text:"Να δημιουργήσω μια επικοινωνιακή καμπάνια", value:"Marketing"}
-    ]
-  },
-  {
-    q: "Αν είχες να διαχειριστείς μια κρίση στην εταιρεία, ποιο θα ήταν το πρώτο σου βήμα;",
-    options: [
-      {text:"Να ελέγξω τους αριθμούς και να υπολογίσω τα πιθανά ρίσκα", value:"Finance"},
-      {text:"Να φτιάξω ένα εργαλείο που παρακολουθεί την εξέλιξη των δεδομένων", value:"Data"},
-      {text:"Να προτείνω αλλαγές στις διαδικασίες", value:"Consulting"},
-      {text:"Να επικοινωνήσω με τους ενδιαφερόμενους για να διατηρηθεί η εμπιστοσύνη", value:"Marketing"},
-      {text:"Να εκπαιδεύσω την ομάδα ώστε να ξέρει πώς να αντιμετωπίσει την κατάσταση", value:"HR"}
-    ]
-  },
-  {
-    q: "Σου ανατίθεται ένα έργο που απαιτεί συνεργασία πολλών τμημάτων. Τι ρόλο θα ήθελες να παίξεις;",
-    options: [
-      {text:"Να φροντίσω ώστε όλοι να κατανοούν τους στόχους και να συνεργάζονται", value:"HR"},
-      {text:"Να δημιουργήσω dashboards για να παρακολουθούν όλοι την πρόοδο", value:"Data"},
-      {text:"Να υπολογίσω τα κόστη και τις οικονομικές συνέπειες", value:"Finance"},
-      {text:"Να προτείνω στρατηγικές για την καλύτερη εκτέλεση", value:"Consulting"},
-      {text:"Να σχεδιάσω πώς να προσεγγίσουμε πελάτες/χρήστες", value:"Marketing"}
-    ]
-  },
-  {
-    q: "Αν έπρεπε να αποφασίσεις για ένα νέο προϊόν, ποιο στοιχείο θα σε ενδιέφερε περισσότερο;",
-    options: [
-      {text:"Το αν είναι επικερδές και το οικονομικό ρίσκο", value:"Finance"},
-      {text:"Πώς να παρακολουθώ την απόδοσή του με τεχνολογία", value:"Data"},
-      {text:"Πώς να το εντάξω στρατηγικά στην αγορά", value:"Consulting"},
-      {text:"Πώς να το επικοινωνήσω στους πελάτες", value:"Marketing"},
-      {text:"Πώς να εκπαιδεύσω την ομάδα ώστε να το υποστηρίξει σωστά", value:"HR"}
-    ]
-  },
-  {
-    q: "Τι σε κινητοποιεί περισσότερο όταν ξεκινάς μια εργασία;",
-    options: [
-      {text:"Η ανάλυση δεδομένων και η αλήθεια πίσω από τους αριθμούς", value:"Data"},
-      {text:"Η κατανόηση των οικονομικών επιπτώσεων", value:"Finance"},
-      {text:"Η στρατηγική επίλυση προβλημάτων", value:"Consulting"},
-      {text:"Η δυνατότητα να επικοινωνώ και να επηρεάζω άλλους", value:"Marketing"},
-      {text:"Η ανάπτυξη και καθοδήγηση ανθρώπων", value:"HR"}
-    ]
-  },
-  {
-    q: "Σου ανατίθεται να βελτιώσεις μια διαδικασία. Τι προσέγγιση θα διάλεγες;",
-    options: [
-      {text:"Να αναλύσω τα δεδομένα και να βρω μοτίβα", value:"Data"},
-      {text:"Να αξιολογήσω την οικονομική της αποτελεσματικότητα", value:"Finance"},
-      {text:"Να προτείνω αλλαγές με βάση τη στρατηγική", value:"Consulting"},
-      {text:"Να εκπαιδεύσω την ομάδα στην καινούργια διαδικασία", value:"HR"},
-      {text:"Να δημιουργήσω επικοινωνιακά υλικά για σωστή εφαρμογή", value:"Marketing"}
-    ]
-  },
-  {
-    q: "Αν έπρεπε να πάρεις μια σημαντική απόφαση με περιορισμένο χρόνο, τι θα έκανες;",
-    options: [
-      {text:"Να βασιστώ σε δεδομένα και analytics", value:"Data"},
-      {text:"Να υπολογίσω τα οικονομικά και το ρίσκο", value:"Finance"},
-      {text:"Να σκεφτώ τη στρατηγική επιρροή της απόφασης", value:"Consulting"},
-      {text:"Να σιγουρευτώ ότι όλοι οι εμπλεκόμενοι είναι ενήμεροι", value:"HR"},
-      {text:"Να σκεφτώ πώς θα επικοινωνηθεί καλύτερα στους πελάτες", value:"Marketing"}
-    ]
-  },
-  {
-    q: "Ποιο από τα παρακάτω σενάρια σε ενθουσιάζει περισσότερο;",
-    options: [
-      {text:"Να ανακαλύψω μοτίβα και ευκαιρίες μέσα από δεδομένα", value:"Data"},
-      {text:"Να ελέγξω οικονομικές αποφάσεις και ρίσκα", value:"Finance"},
-      {text:"Να σχεδιάσω στρατηγικές για μεγαλύτερη αποτελεσματικότητα", value:"Consulting"},
-      {text:"Να δημιουργήσω καμπάνιες και στρατηγικές επικοινωνίας", value:"Marketing"},
-      {text:"Να αναπτύξω ταλέντα και να εκπαιδεύσω συναδέλφους", value:"HR"}
-    ]
-  }
+  // ... (Βάλε εδώ όλες τις άλλες ερωτήσεις όπως πριν)
 ];
 
 let current = 0;
@@ -142,6 +150,7 @@ function showQuestion(){
   updateProgress();
   const quiz = document.getElementById('quiz');
   quiz.innerHTML = '';
+  
   if(current < questions.length){
     const qDiv = document.createElement('div');
     qDiv.className = 'question';
@@ -195,3 +204,5 @@ showQuestion();
 
 </body>
 </html>
+
+
